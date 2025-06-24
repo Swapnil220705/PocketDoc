@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 
 export async function POST(req: NextRequest) {
-  const { message } = await req.json()
+  const { message, history } = await req.json()
 
   if (!message || typeof message !== "string" || !message.trim()) {
     return NextResponse.json({ reply: "❗ Please provide a valid message." }, { status: 400 })
@@ -9,21 +9,6 @@ export async function POST(req: NextRequest) {
 
   if (!process.env.GROQ_API_KEY) {
     return NextResponse.json({ error: "Groq API key missing" }, { status: 500 })
-  }
-
-  const allowedTopics = [
-    "health", "doctor", "medicine", "disease", "symptom", "treatment", "pain", "injury",
-    "mental", "fitness", "hospital", "illness", "ache", "fever", "cough", "headache",
-    "stomach", "cold", "flu", "nausea", "vomit", "diarrhea", "rash", "infection", "burn", "bleeding", "fracture"
-  ]
-
-  const lowercased = message.toLowerCase()
-  const isHealthRelated = allowedTopics.some(topic => lowercased.includes(topic))
-
-  if (!isHealthRelated) {
-    return NextResponse.json({
-      reply: "❌ I'm only trained to help with health-related questions. Please ask me something medical.",
-    })
   }
 
   try {
@@ -38,13 +23,18 @@ export async function POST(req: NextRequest) {
         messages: [
           {
             role: "system",
-            content: "You are a helpful health assistant. ONLY answer medical questions. If asked about anything else, refuse politely.",
+            content:
+              "You are a helpful, friendly AI health assistant. ONLY respond to health-related or medical questions. If the user asks something unrelated, politely explain that you can only assist with medical concerns. Always respond clearly using bullet points, easy-to-understand language, and actionable advice.",
           },
+          ...(history || []).map((msg: any) => ({
+            role: msg.sender === "user" ? "user" : "assistant",
+            content: msg.text,
+          })),
           {
             role: "user",
             content: message,
           },
-        ],
+        ],        
         temperature: 0.7,
       }),
     })

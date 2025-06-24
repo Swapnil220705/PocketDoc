@@ -43,7 +43,7 @@ export default function PocketDocHome() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: trimmed }),
+        body: JSON.stringify({ message: trimmed, history: messages }),
       })
 
       const data = await res.json()
