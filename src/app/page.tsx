@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Send, Bot, User, Sparkles } from "lucide-react"
+import { Send, Bot, User, Sparkles, Locate } from "lucide-react"
 
 interface Message {
   id: number
@@ -73,8 +73,35 @@ export default function PocketDocHome() {
     if (e.key === "Enter") handleSendMessage()
   }
 
+  const handleFindDoctors = () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser.")
+      return
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords
+        const mapsUrl = `https://www.google.com/maps/search/doctors/@${latitude},${longitude},15z`
+        window.open(mapsUrl, "_blank")
+      },
+      () => {
+        alert("Unable to retrieve your location.")
+      }
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white overflow-hidden">
+      {/* Floating Button */}
+      <button
+        onClick={handleFindDoctors}
+        className="fixed top-4 right-4 z-50 bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white font-medium px-4 py-2 rounded-full shadow-lg transition-all duration-300 hover:scale-105 flex items-center gap-2"
+      >
+        <Locate className="w-4 h-4" />
+        Find Nearby Doctors
+      </button>
+
       {/* Background Animation */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
