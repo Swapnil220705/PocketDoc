@@ -3,6 +3,10 @@ import { NextRequest, NextResponse } from "next/server"
 export async function POST(req: NextRequest) {
   const { message } = await req.json()
 
+  if (!message || typeof message !== "string" || !message.trim()) {
+    return NextResponse.json({ reply: "❗ Please provide a valid message." }, { status: 400 })
+  }
+
   if (!process.env.GROQ_API_KEY) {
     return NextResponse.json({ error: "Groq API key missing" }, { status: 500 })
   }
