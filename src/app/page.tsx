@@ -75,7 +75,7 @@ export default function PocketDocHome() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white overflow-hidden">
-      {/* 🔵 Animated background & pattern (keep same as before) */}
+      {/* Background Animation */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -83,35 +83,30 @@ export default function PocketDocHome() {
       </div>
       <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.03)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
 
-      <div className="relative z-10 container mx-auto px-6 py-12">
-        {/* 👋 Welcome / Title Section */}
-        <div
-          className={`text-center mb-16 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-        >
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-12 py-12">
+        {/* Hero */}
+        <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 mb-8">
             <Sparkles className="w-4 h-4 text-cyan-400" />
             <span className="text-sm font-medium text-cyan-300">AI-Powered Healthcare</span>
           </div>
-
-          <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent leading-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent leading-tight">
             Welcome to PocketDoc
           </h1>
-
-          <p className="text-xl md:text-2xl text-blue-200/80 font-light max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-2xl text-blue-200/80 font-light max-w-2xl mx-auto leading-relaxed">
             Your AI Health Companion
           </p>
-
           <div className="mt-8 flex justify-center">
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
           </div>
         </div>
 
-        {/* 💬 Chat UI */}
-        <div className="max-w-4xl mx-auto transition-all duration-1000 delay-300">
+        {/* Chat UI */}
+        <div className="w-full max-w-4xl px-4 sm:px-6 md:px-12 mx-auto transition-all duration-1000 delay-300">
           <div className="relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/50 via-purple-500/50 to-cyan-500/50 rounded-3xl blur-sm group-hover:blur-md transition-all duration-300 animate-pulse"></div>
 
-            <div className="relative bg-slate-800/50 backdrop-blur-xl border border-blue-400/20 rounded-3xl p-8 shadow-2xl">
+            <div className="relative bg-slate-800/50 backdrop-blur-xl border border-blue-400/20 rounded-3xl p-4 md:p-8 shadow-2xl">
               {/* Header */}
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
@@ -161,27 +156,25 @@ export default function PocketDocHome() {
               </div>
 
               {/* Input */}
-              <div className="relative">
-                <div className="flex items-center gap-3 p-3 bg-slate-700/30 rounded-2xl border border-blue-400/20 focus-within:border-blue-400/50 transition-all duration-300">
-                  <input
-                    type="text"
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    onKeyDown={handleEnterKey}
-                    placeholder="Ask me about your health..."
-                    className="flex-1 bg-transparent text-white placeholder-blue-200/50 focus:outline-none text-sm"
-                  />
-                  <button
-                    onClick={handleSendMessage}
-                    disabled={loading}
-                    className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center hover:scale-105 transition-all duration-300"
-                  >
-                    <Send className="w-4 h-4 text-white" />
-                  </button>
-                </div>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 p-3 bg-slate-700/30 rounded-2xl border border-blue-400/20 focus-within:border-blue-400/50 transition-all duration-300">
+                <input
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyDown={handleEnterKey}
+                  placeholder="Ask me about your health..."
+                  className="flex-1 bg-transparent text-white placeholder-blue-200/50 focus:outline-none text-sm"
+                />
+                <button
+                  onClick={handleSendMessage}
+                  disabled={loading}
+                  className="sm:w-10 w-full h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center hover:scale-105 transition-all duration-300"
+                >
+                  <Send className="w-4 h-4 text-white" />
+                </button>
               </div>
 
-              {/* Footnotes */}
+              {/* Footer Tags */}
               <div className="flex justify-center mt-6 gap-6">
                 <div className="flex items-center gap-2 text-xs text-blue-300/70">
                   <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
@@ -200,7 +193,7 @@ export default function PocketDocHome() {
           </div>
         </div>
 
-        {/* Footer */}
+        {/* Footer Note */}
         <div className={`text-center mt-16 transition-all duration-1000 delay-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
           <p className="text-blue-200/60 text-sm">Powered by advanced AI • Your health data is encrypted and secure</p>
         </div>
